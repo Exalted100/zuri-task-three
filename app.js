@@ -14,7 +14,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: "false" }));
 app.use(bodyParser.json());
 
-
 //Database connection
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -54,7 +53,6 @@ const getRequest = async (req, res) => {
             data: doc
         })
     } catch(err) {
-        console.log(err.message)
         res.status(404).send("fail")
     }   
 }
@@ -69,7 +67,6 @@ const postRequest = async (req, res) => {
             data: doc
         })
     } catch(err) {
-        console.log(err.message)
         res.status(404).send("fail")
     }   
 }
@@ -77,14 +74,13 @@ const postRequest = async (req, res) => {
 //Update request
 const putRequest = async (req, res) => {
     try {
-        await User.findByIdAndUpdate(request.params.id, req.body);
-        const doc = await User.save()
+        const doc = await User.findByIdAndUpdate(req.query.id, req.body, {new: true});
+
         res.status(200).send({
             message: "success",
             data: doc
         })
       } catch(err) {
-        console.log(err.message)
         res.status(404).send("fail")
     } 
 }
@@ -92,15 +88,15 @@ const putRequest = async (req, res) => {
 //Delete request
 const deleteRequest = async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.params.id);
+        await User.findByIdAndDelete(req.query.id);
+
         res.status(200).send({
             message: "success",
             data: null
         })   
-} catch(err) {
-    console.log(err.message)
-    res.status(404).send("fail")
-} 
+    } catch(err) {
+        res.status(404).send("fail")
+    } 
 }
 
 //Requests to server
