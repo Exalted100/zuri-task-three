@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const bodyParser = require("body-parser");
 
 //Native dependencies
-const MONGO_URI = require("./keys").MONGO_URI
+const MONGO_URI = process.env.MONGO_URI || require("./keys").MONGO_URI
 
 //Express function call
 const app = express();
