@@ -92,10 +92,10 @@ const putRequest = async (req, res) => {
 //Delete request
 const deleteRequest = async (req, res) => {
     try {
-        const doc = await User.findByIdAndDelete(req.params.id);
+        await User.findByIdAndDelete(req.params.id);
         res.status(200).send({
             message: "success",
-            data: doc
+            data: null
         })   
 } catch(err) {
     console.log(err.message)
